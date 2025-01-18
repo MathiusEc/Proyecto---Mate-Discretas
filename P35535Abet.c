@@ -39,21 +39,21 @@ Debe presentar los resultados parciales en color verde y el final en rojo
 int main(){
 
     printf(BG_LBLUE WHITE "=====================================\n" RESET);        // Se utiliza la librería Colores_Terminal.h para imprimir 
-    printf(BG_LBLUE WHITE "         MATEMÁTICAS DISCRETAS I     \n" RESET);        // texto en la consola con fonde celeste y letras blancas.
+    printf(BG_LBLUE WHITE "         MATEMATICAS DISCRETAS I     \n" RESET);        // texto en la consola con fonde celeste y letras blancas.
     printf(BG_LBLUE WHITE "=====================================\n\n" RESET);
 
     printf(BG_LGREEN BLACK "NOMBRES DE LOS INTEGRANTES:\n" RESET);                 // Se imprimen los nombres de los integrantes del grupo
     printf(ROSE "1. Isaac Benitez\n" RESET);                                       // con letras de color rosada
     printf(ROSE "2. Mathias Castillo\n" RESET);
 
-    printf(BG_YELLOW BLACK "DESCRIPCIÓN DE LO QUE HACE EL PROGRAMA:\n" RESET);     // Explicación de lo que hace el programa	
+    printf(BG_YELLOW BLACK "DESCRIPCION DE LO QUE HACE EL PROGRAMA:\n" RESET);     // Explicación de lo que hace el programa	
     printf(GRAY "aqui va la\n");
     printf(GRAY "descripcion\n\n" RESET);
 
     printf(BG_ORANGE WHITE "NCR:\n" RESET);                                        // NCR y año lectivo con letras celestes
     printf(CYAN "5535 \n" RESET);
 
-    printf(BG_ORANGE WHITE "AÑO LECTIVO:\n" RESET);
+    printf(BG_ORANGE WHITE "CALENDARIO ACADEMICO\n" RESET);
     printf(CYAN "2025 - 10 \n" RESET);
 
     printf(BG_LBLUE WHITE "\n=====================================\n" RESET);      // Fin de la Carátula
