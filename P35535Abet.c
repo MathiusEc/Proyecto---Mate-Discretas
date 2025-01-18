@@ -35,27 +35,32 @@ Debe presentar los resultados parciales en color verde y el final en rojo
 */
 
 #include <stdio.h>
+#include ".\Librerías\Colores_Terminal.h"
 int main(){
 
-    printf("\n==============================\n"); 
-    printf(" MATEMATICAS DISCRETAS I\n"); 
-    printf("\n==============================\n"); 
-    printf(" NOMBRES DE LOS INTEGRANTES\n"); 
-    printf("\n==============================\n"); 
-    printf(" DESCRIPCION DE LO QUE HACE EL PROGRAMA\n"); 
-    printf("\n==============================\n"); 
-    printf(" AÑO LECTIVO\n"); 
-    printf("\n==============================\n");
+    printf(BG_LBLUE WHITE "=====================================\n" RESET);        // Se utiliza la librería Colores_Terminal.h para imprimir 
+    printf(BG_LBLUE WHITE "         MATEMÁTICAS DISCRETAS I     \n" RESET);        // texto en la consola con fonde celeste y letras blancas.
+    printf(BG_LBLUE WHITE "=====================================\n\n" RESET);
 
-// ya voy a buscar como imprimirle con colores y medio bastante decorando
-// https://gist-github-com.translate.goog/Alfonzzoj/db207b89d56f24d9d0b17ff93e091be8?_x_tr_sl=en&_x_tr_tl=es&_x_tr_hl=es&_x_tr_pto=tc
+    printf(BG_LGREEN BLACK "NOMBRES DE LOS INTEGRANTES:\n" RESET);                 // Se imprimen los nombres de los integrantes del grupo
+    printf(ROSE "1. Isaac Benitez\n" RESET);                                       // con letras de color rosada
+    printf(ROSE "2. Mathias Castillo\n" RESET);
+
+    printf(BG_YELLOW BLACK "DESCRIPCIÓN DE LO QUE HACE EL PROGRAMA:\n" RESET);     // Explicación de lo que hace el programa	
+    printf(GRAY "aqui va la\n");
+    printf(GRAY "descripcion\n\n" RESET);
+
+    printf(BG_ORANGE WHITE "NCR:\n" RESET);                                        // NCR y año lectivo con letras celestes
+    printf(CYAN "5535 \n" RESET);
+
+    printf(BG_ORANGE WHITE "AÑO LECTIVO:\n" RESET);
+    printf(CYAN "2025 - 10 \n" RESET);
+
+    printf(BG_LBLUE WHITE "\n=====================================\n" RESET);      // Fin de la Carátula
 
 
-/*se viene tremenda "Inspiracion" ve isaac jsjsjs ya el hago yo lo de imprimir y decorarle, tu sigue con las validaciones y demas, pero
- hazle en otro .c para evitarle conflits, y luego unimos, pilas
- */
 
-
+ // loco, quieres meterle una imagen que diga udla? o ascci art?
 
 
 
