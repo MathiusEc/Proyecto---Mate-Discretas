@@ -48,6 +48,12 @@ int main(){
     printf("\n==============================\n");
 
 // ya voy a buscar como imprimirle con colores y medio bastante decorando
+// https://gist-github-com.translate.goog/Alfonzzoj/db207b89d56f24d9d0b17ff93e091be8?_x_tr_sl=en&_x_tr_tl=es&_x_tr_hl=es&_x_tr_pto=tc
+
+
+/*se viene tremenda "Inspiracion" ve isaac jsjsjs ya el hago yo lo de imprimir y decorarle, tu sigue con las validaciones y demas, pero
+ hazle en otro .c para evitarle conflits, y luego unimos, pilas
+ */
 
 
 
