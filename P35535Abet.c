@@ -35,7 +35,7 @@ Debe presentar los resultados parciales en color verde y el final en rojo
 */
 
 #include <stdio.h>
-#include ".\Librerías\Colores_Terminal.h"
+#include ".\Librerias\Colores_Terminal.h"
 int main(){
 
     printf(BG_LBLUE WHITE "=====================================\n" RESET);        // Se utiliza la librería Colores_Terminal.h para imprimir 
@@ -57,7 +57,6 @@ int main(){
     printf(CYAN "2025 - 10 \n" RESET);
 
     printf(BG_LBLUE WHITE "\n=====================================\n" RESET);      // Fin de la Carátula
-
 
 
  // loco, quieres meterle una imagen que diga udla? o ascci art?
