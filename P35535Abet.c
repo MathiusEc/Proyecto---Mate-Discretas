@@ -38,18 +38,18 @@ Debe presentar los resultados parciales en color verde y el final en rojo
 #include ".\Librerias\Colores_Terminal.h"
 int main(){ 
 
-    printf("   __  ______  __    ___  \n");
-    printf("  / / / / __  / /   /   |\n" );
-    printf(" / / / / / / / /   / /| |\n");
-    printf("/ /_/ / /_/ / /___/ ___ |\n");
-    printf(" ____/_____/_____/_/  |_|\n");    
+    printf("          __  ______  __    ___  \n");
+    printf("         / / / / __  / /   /   |\n" );
+    printf("        / / / / / / / /   / /| |\n");
+    printf("       / /_/ / /_/ / /___/ ___ |\n");
+    printf("        ____/_____/_____/_/  |_|\n");    
 
     printf(BG_LBLUE WHITE "=====================================" RESET "\n");      // Se utiliza la librería Colores_Terminal.h para imprimir 
     printf(BG_LBLUE WHITE "         MATEMATICAS DISCRETAS I     " RESET "\n");      // Se utiliza la librería Colores_Terminal.h para imprimir   
     printf(BG_LBLUE WHITE "=====================================" RESET "\n\n");    // texto en la consola con fonde celeste y letras blancas.
 
     printf(BG_LGREEN BLACK "NOMBRES DE LOS INTEGRANTES:" RESET "\n");               // Se imprimen los nombres de los integrantes del grupo
-    printf(ROSE "1. Isaac Benitez  \n");                                     // con letras de color rosada
+    printf(ROSE "1. Isaac Benitez  \n");                                            // con letras de color rosada
     printf(ROSE "2. Mathias Castillo \n\n");
 
     printf(BG_YELLOW BLACK "DESCRIPCION DE LO QUE HACE EL PROGRAMA:" RESET "\n");   // Explicación de lo que hace el programa
@@ -85,7 +85,6 @@ int main(){
 
     
 
- // loco, quieres meterle una imagen que diga udla? o ascci art?
 
 
 
