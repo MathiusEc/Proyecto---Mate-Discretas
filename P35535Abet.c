@@ -36,56 +36,39 @@ Debe presentar los resultados parciales en color verde y el final en rojo
 
 #include <stdio.h>
 #include ".\Librerias\Colores_Terminal.h"
-int main(){ 
+int main(){
+    int opcin;
 
-    printf("   __  ______  __    ___  \n");
-    printf("  / / / / __  / /   /   |\n" );
-    printf(" / / / / / / / /   / /| |\n");
-    printf("/ /_/ / /_/ / /___/ ___ |\n");
-    printf(" ____/_____/_____/_/  |_|\n");    
+    printf(BG_LBLUE WHITE "=====================================\n" RESET);        // Se utiliza la librería Colores_Terminal.h para imprimir 
+    printf(BG_LBLUE WHITE "         MATEMATICAS DISCRETAS I     \n" RESET);        // texto en la consola con fonde celeste y letras blancas.
+    printf(BG_LBLUE WHITE "=====================================\n\n" RESET);
 
-    printf(BG_LBLUE WHITE "=====================================" RESET "\n");      // Se utiliza la librería Colores_Terminal.h para imprimir 
-    printf(BG_LBLUE WHITE "         MATEMATICAS DISCRETAS I     " RESET "\n");      // Se utiliza la librería Colores_Terminal.h para imprimir   
-    printf(BG_LBLUE WHITE "=====================================" RESET "\n\n");    // texto en la consola con fonde celeste y letras blancas.
+    printf(BG_LGREEN BLACK "NOMBRES DE LOS INTEGRANTES:\n" RESET);                 // Se imprimen los nombres de los integrantes del grupo
+    printf(ROSE "1. Isaac Benitez\n" RESET);                                       // con letras de color rosada
+    printf(ROSE "2. Mathias Castillo\n" RESET);
 
-    printf(BG_LGREEN BLACK "NOMBRES DE LOS INTEGRANTES:" RESET "\n");               // Se imprimen los nombres de los integrantes del grupo
-    printf(ROSE "1. Isaac Benitez  \n");                                     // con letras de color rosada
-    printf(ROSE "2. Mathias Castillo \n\n");
+    printf(BG_YELLOW BLACK "DESCRIPCION DE LO QUE HACE EL PROGRAMA:\n" RESET);     // Explicación de lo que hace el programa	
+    printf(GRAY "aqui va la\n");
+    printf(GRAY "descripcion\n\n" RESET);
 
-    printf(BG_YELLOW BLACK "DESCRIPCION DE LO QUE HACE EL PROGRAMA:" RESET "\n");   // Explicación de lo que hace el programa
-    printf(GRAY "Desarrollar un programa que implemente una expresión SOP (Suma de Productos) a partir de una tabla de \n");
-    printf(GRAY "verdad ingresada por el usuario. El programa debe construir y presentar la expresión booleana \n");
-    printf(GRAY "correspondiente, utilizando operaciones lógicas OR y AND. \n \n");
+    printf(BG_ORANGE WHITE "NCR:\n" RESET);                                        // NCR y año lectivo con letras celestes
+    printf(CYAN "5535 \n" RESET);
 
-    printf(GRAY "Instrucciones: \n");
-    printf(GRAY "i. Solicitar al usuario que ingrese el número de variables booleanas (solo 2 o 3).\n");
-    printf(GRAY "ii. Generar la tabla de verdad correspondiente al número de variables ingresadas.\n");
-    printf(GRAY "iii. Pedir al usuario que ingrese los valores de salida (“1” o “0”) para cada fila de la tabla de verdad.\n");
-    printf(GRAY "iv. Identificar las filas de la tabla de verdad donde la salida es “1”.\n");
-    printf(GRAY "v. Para cada fila con salida “1”:\n");   
-    printf(GRAY "   a. Construir un término producto (AND) que represente las combinaciones de entrada de esa \n");
-    printf(GRAY "   fila. Por ejemplo, si las variables son A y B, y la fila tiene A=1 y B=0, el término producto sería\n");  
-    printf(GRAY "   A AND NOT B.\n \n"); 
+    printf(BG_ORANGE WHITE "CALENDARIO ACADEMICO\n" RESET);
+    printf(CYAN "2025 - 10 \n" RESET);
 
-    printf(GRAY "   b. Combinar todos los términos producto usando la operación suma (OR) para formar la\n");
-    printf(GRAY "   expresión SOP final.\n \n");
+    printf(BG_LBLUE WHITE "\n=====================================\n" RESET);      // Fin de la Carátula
 
-    printf(GRAY "vi. Presentar al usuario: \n");
-    printf(GRAY "   a. La expresión booleana final. \n");
-    printf(GRAY "   b. La tabla de verdad completa con las salidas ingresadas. \n \n");
-
-    printf(BG_ORANGE WHITE "NCR:" RESET "\n");                                      // NCR y año lectivo con letras celestes
-    printf(CYAN "5535" RESET "\n");
-
-    printf(BG_ORANGE WHITE "CALENDARIO ACADEMICO" RESET "\n");
-    printf(CYAN "2025 - 10" RESET "\n");
-
-    printf(BG_LBLUE WHITE "=====================================" RESET "\n");      // Fin de la Carátula
-
-
-    
 
  // loco, quieres meterle una imagen que diga udla? o ascci art?
+
+ do{
+    printf("\nIngrese por favor la cantidad de variables que desea usar: ");
+    scanf("%d", &opcin);
+    if(opcin<2 || opcin>3){
+        printf("Por favor ingrese una opcion valida\n");
+    }
+ }while (opcin<2 || opcin>3);
 
 
 
