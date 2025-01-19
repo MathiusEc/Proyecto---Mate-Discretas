@@ -62,13 +62,7 @@ int main(){
 
  // loco, quieres meterle una imagen que diga udla? o ascci art?
 
- do{
-    printf("\nIngrese por favor la cantidad de variables que desea usar: ");
-    scanf("%d", &opcin);
-    if(opcin<2 || opcin>3){
-        printf("Por favor ingrese una opcion valida\n");
-    }
- }while (opcin<2 || opcin>3);
+
 
 
 
