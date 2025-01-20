@@ -1,0 +1,80 @@
+#include <stdio.h>
+#include "Colores_Terminal.h" // Archivo con los macros de colores
+#include "Funciones.c" // Funciones principales que ya definiste
+
+int getNumVariables() {
+    int num;
+    do {
+        printf("Digite el número de variables lógicas, solo " GREEN "2 " RESET "o " GREEN "3" RESET ": ");
+        scanf("%d", &num);
+        if (num != 2 && num != 3) {
+            printf(RED "Error: Solo se permite 2 o 3 variables.\n" RESET);
+        }
+    } while (num != 2 && num != 3);
+    return num;
+}
+
+void inputTruthTable(int numVars, int truthTable[]) {
+    int rows = 1 << numVars;
+    printf("Ingrese los valores de salida (" GREEN "0" RESET " o " GREEN "1" RESET ") para cada fila de la tabla de verdad:\n");
+    printf("A  B");
+    if (numVars == 3) printf("  C");
+    printf("  " RED "S\n" RESET);
+    printf("-------------------\n");
+
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < numVars; j++) {
+            printf("%d  ", (i >> (numVars - 1 - j)) & 1);
+        }
+        int value;
+        do {
+            scanf("%d", &value);
+            if (value != 0 && value != 1) {
+                printf(RED "Error: Solo se permite 0 o 1. Intente de nuevo: " RESET);
+            }
+        } while (value != 0 && value != 1);
+        truthTable[i] = value;
+    }
+}
+
+void generateBooleanExpression(int numVars, int truthTable[]) {
+    int rows = 1 << numVars;
+    printf("La expresión booleana generada es: ");
+    int first = 1;
+    for (int i = 0; i < rows; i++) {
+        if (truthTable[i]) {
+            if (!first) printf(" " CYAN "+ " RESET);
+            first = 0;
+            for (int j = 0; j < numVars; j++) {
+                if ((i >> (numVars - 1 - j)) & 1) {
+                    printf(CYAN "%c" RESET, 'A' + j);
+                } else {
+                    printf(CYAN "%c'" RESET, 'A' + j);
+                }
+            }
+        }
+    }
+    printf("\n\n");
+}
+
+void generateTruthTable(int numVars, int truthTable[]) {
+    int rows = 1 << numVars;
+    printf("Tabla de verdad de la expresión generada\n\n");
+
+    for (int i = 0; i < numVars; i++) {
+        printf(CYAN "%c  " RESET, 'A' + i);
+    }
+    printf(RED "S\n" RESET);
+    printf("-------------------\n");
+
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < numVars; j++) {
+            printf("%d  ", (i >> (numVars - 1 - j)) & 1);
+        }
+
+        // Color para la columna "S"
+        const char* resultColor = truthTable[i] ? GREEN : GRAY;
+        printf("%s%d" RESET "\n", resultColor, truthTable[i]);
+    }
+}
+
