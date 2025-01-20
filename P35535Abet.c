@@ -35,8 +35,13 @@ Debe presentar los resultados parciales en color verde y el final en rojo
 */
 
 #include <stdio.h>
+#include <math.h>
+#include <string.h>
 #include ".\Librerias\Colores_Terminal.h"
-//#include ".\Librerias\Funcion-forma-canonica.h"
+#include ".\Librerias\Funcion-forma-canonica.h"
+
+void construirSOP(int numVars, int tabla[][numVars + 1], int totalFilas, char *resultado);
+
 int main(){
     int variables; 
 
@@ -46,15 +51,15 @@ int main(){
     printf("        / /_/ / /_/ / /___/ ___ |\n");
     printf("         ____/_____/_____/_/  |_|\n");    
 
-    printf(BG_LBLUE WHITE "=====================================\n" RESET);        // Se utiliza la librería Colores_Terminal.h para imprimir 
-    printf(BG_LBLUE WHITE "         MATEMATICAS DISCRETAS I     \n" RESET);        // texto en la consola con fonde celeste y letras blancas.
+    printf(BG_LBLUE WHITE "=====================================\n" RESET);        
+    printf(BG_LBLUE WHITE "         MATEMATICAS DISCRETAS I     \n" RESET);        
     printf(BG_LBLUE WHITE "=====================================\n\n" RESET);
 
-    printf(BG_LGREEN BLACK "NOMBRES DE LOS INTEGRANTES:" RESET "\n");               // Se imprimen los nombres de los integrantes del grupo
-    printf(ROSE "1. Isaac Benitez  \n");                                            // con letras de color rosada
+    printf(BG_LGREEN BLACK "NOMBRES DE LOS INTEGRANTES:" RESET "\n");               
+    printf(ROSE "1. Isaac Benitez  \n");                                            
     printf(ROSE "2. Mathias Castillo \n\n");
 
-    printf(BG_YELLOW BLACK "DESCRIPCION DE LO QUE HACE EL PROGRAMA:\n" RESET);     // Explicación de lo que hace el programa	
+    printf(BG_YELLOW BLACK "DESCRIPCION DE LO QUE HACE EL PROGRAMA:\n" RESET);     
     printf(GRAY "Desarrollar un programa que implemente una expresión SOP (Suma de Productos) a partir de una tabla de\n");
     printf(GRAY "verdad ingresada por el usuario. El programa debe construir y presentar la expresión booleana\n");
     printf(GRAY "correspondiente, utilizando operaciones lógicas OR y AND.\n\n");
@@ -74,16 +79,14 @@ int main(){
     printf(GRAY "       a. La expresión booleana final\n");
     printf(GRAY "       b. La tabla de verdad completada con las salidas ingresadas\n\n");
 
-    printf(BG_ORANGE WHITE "NCR:"RESET "\n");                                  // Resetea el color después de "NCR:"
-    printf(CYAN "5535\n" RESET);                                            // Imprime el número con el texto en color cian, seguido de un reset.
+    printf(BG_ORANGE WHITE "NCR:"RESET "\n");                                  
+    printf(CYAN "5535\n" RESET);                                            
 
-    printf(BG_ORANGE WHITE "CALENDARIO ACADEMICO" RESET "\n");              // Resetea el fondo justo después del texto.
-    printf(CYAN "2025 - 10\n" RESET);                                       // Imprime el calendario en cian y lo resetea.
+    printf(BG_ORANGE WHITE "CALENDARIO ACADEMICO" RESET "\n");              
+    printf(CYAN "2025 - 10\n" RESET);                                       
 
-    printf(BG_LBLUE WHITE "=====================================" RESET "\n"); // Todo bien aquí, ya que el reset viene después de los caracteres de fondo.
+    printf(BG_LBLUE WHITE "=====================================" RESET "\n"); 
 
-
- // aqui solo poner lo q ya esta probado, hacer en otros archivos las demas pruebas, para evitar conflictos
     do{
         printf("\nPor favor, Ingrese la cantidad de variables que desea usar, solo 2 o 3: ");
         scanf("%d", &variables);
@@ -92,45 +95,44 @@ int main(){
         }
     }while (variables<2 || variables>3);
 
-    // Determinación del número de filas según las variables (2^n)
     int filas = 1 << variables; // 2^variables
-    int tabla[filas];           // Arreglo para almacenar las salida 
+    int tabla[filas][variables + 1];           
+    char resultado[1024] = ""; // Variable para almacenar la expresión SOP
 
     printf("Ingrese los valores de salida (0 o 1) para cada fila de la tabla de verdad:\n");
     for (int i = 0; i < filas; i++) {
         do {
             printf("Fila %d: ", i);
-            scanf(" %d", &tabla[i]);
-            if (tabla[i] != 0 && tabla[i] != 1) {
+            scanf(" %d", &tabla[i][variables]);
+            if (tabla[i][variables] != 0 && tabla[i][variables] != 1) {
                 printf(RED "Error: Solo puede ingresar 0 o 1.\n" RESET);
             }
-        } while (tabla[i] != 0 && tabla[i] != 1);
-    }
-
-    //Generación de la tabla de verdad y la expresión booleana
-    printf("\nTabla de Verdad:\n");
-    printf("A     B    ");
-    if (variables == 3){
-        printf("C    ");
-        printf("S\n");
-        printf("------------------------\n");
-    }else{
-        printf("S\n");
-        printf("------------------------\n");
+        } while (tabla[i][variables] != 0 && tabla[i][variables] != 1);
     }
 
     for (int i = 0; i < filas; i++) {
-        for (int j = variables - 1; j >= 0; j--) {
-            // Imprime los valores de las variables en formato binario
-            printf("%d     ", (i >> j) & 1);
+        for (int j = 0; j < variables; j++) {
+            tabla[i][j] = (i >> (variables - j - 1)) & 1;
         }
-        printf(GREEN "%d\n" RESET, tabla[i]); // Imprime la salida en color verde
     }
-    
 
+    printf("\nTabla de Verdad:\n");
+    for (int i = 0; i < variables; i++) {
+        printf(" %c ", 'A' + i);
+    }
+    printf(" S\n");
+    for (int i = 0; i < filas; i++) {
+        for (int j = 0; j < variables; j++) {
+            printf(" %d ", tabla[i][j]);
+        }
+        printf(GREEN " %d\n" RESET, tabla[i][variables]);
+    }
 
+    construirSOP(variables, tabla, filas, resultado);
 
-
+    printf("Expresión SOP (Forma Canónica): %s\n", resultado);
 
     return 0;
 }
+
+
