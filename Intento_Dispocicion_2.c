@@ -1,4 +1,5 @@
 #include <stdio.h>
+//#include <stdlib.h>
 #include ".\librerias\Colores_Terminal.h"
 int main(){
     int variables; // cambie a variables porq vamos a trabajar con esta mas adelante, asi no confundirnos tmb
@@ -6,7 +7,7 @@ int main(){
         printf("\nPor favor, Ingrese la cantidad de variables que desea usar, solo 2 o 3: ");
         scanf("%d", &variables);
         if(variables<2 || variables>3){
-            printf("Error: ingrese una opcion valida\n");
+            printf(RED "Error: ingrese una opcion valida\n" RESET);
         }
     }while (variables<2 || variables>3);
 

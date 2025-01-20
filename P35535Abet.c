@@ -89,7 +89,7 @@ do{
     }
  }while (opcin<2 || opcin>3);
 
-
+ // aqui solo poner lo q ya esta probado, hacer en otros archivos las demas pruebas, para evitar conflictos
 
 
 
