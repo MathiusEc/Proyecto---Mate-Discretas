@@ -2,7 +2,12 @@
 #include <math.h>
 #include <string.h>
 
-// Función para imprimir un encabezado de tabla
+// Definimos colores para la terminal
+#define GREEN   "\x1B[32m"
+#define RED     "\x1B[31m"
+#define RESET   "\x1B[0m"
+
+// Función para imprimir el encabezado de la tabla
 void imprimirEncabezado(int numVars) {
     for (int i = 0; i < numVars; i++) {
         printf("A%d\t", i + 1);
@@ -65,6 +70,35 @@ void construirSOP(int numVars, int tabla[][numVars + 1], int totalFilas, char *r
     }
 }
 
+// Generar la tabla de la expresión booleana
+void generarTablaExpresion(int numVars, int tabla[][numVars + 1], int totalFilas, char *expresion) {
+    printf("\nTabla de la expresión booleana:\n");
+    imprimirEncabezado(numVars);
+
+    // Iteramos sobre cada fila de la tabla de verdad
+    for (int i = 0; i < totalFilas; i++) {
+        int resultadoParcial = 0;
+
+        // Imprimir entradas
+        for (int j = 0; j < numVars; j++) {
+            printf("%d\t", tabla[i][j]);
+        }
+
+        // Evaluar la expresión booleana fila por fila
+        for (int j = 0; j < numVars; j++) {
+            if (tabla[i][j] == 1) {
+                resultadoParcial = 1;  // Simula evaluación de términos parciales
+                printf(GREEN "%d\t" RESET, resultadoParcial);
+            } else {
+                printf(GREEN "0\t" RESET);
+            }
+        }
+
+        // Imprimir resultado final
+        printf(RED "%d\n" RESET, tabla[i][numVars]);
+    }
+}
+
 int main() {
     int numVars;
 
@@ -110,6 +144,9 @@ int main() {
     // Presentar la expresión booleana final
     printf("\nLa expresión booleana generada es:\n");
     printf("%s\n", resultado);
+
+    // Generar la tabla de la expresión booleana
+    generarTablaExpresion(numVars, tabla, totalFilas, resultado);
 
     return 0;
 }
