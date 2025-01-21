@@ -20,24 +20,24 @@ void construirSOP(int numVars, int tabla[][numVars + 1], int totalFilas, char *r
             for (int j = 0; j < numVars; j++) {
                 // Verificar si la variable es `1`
                 if (tabla[i][j] == 1) {
-                    // Declarar una cadena para almacenar el nombre de la variable (por ejemplo, "A")
-                    char var[5];
+                    // Declarar una cadena para almacenar el nombre de la variable (por ejemplo, "A" o "B")
+                    char var[2];
                     // Formatear la cadena `var` para incluir el nombre de la variable
-                    sprintf(var, "A%d", j + 1);
+                    sprintf(var, "%c", 'A' + j);
                     // Concatenar la variable `var` a la cadena `resultado`
                     strcat(resultado, var);
                 } else {
                     // Si la variable no es `1` (es `0`), agregar la variable negada
-                    char var[7];
-                    // Formatear la cadena `var` para incluir el nombre de la variable negada (por ejemplo, "NOT A")
-                    sprintf(var, "NOT A%d", j + 1);
+                    char var[3];
+                    // Formatear la cadena `var` para incluir el nombre de la variable negada (por ejemplo, "A'")
+                    sprintf(var, "%c'", 'A' + j);
                     // Concatenar la variable negada `var` a la cadena `resultado`
                     strcat(resultado, var);
                 }
 
-                // Si no es la última variable, agregar el operador `AND`
+                // Si no es la última variable, agregar el operador `*`
                 if (j < numVars - 1) {
-                    strcat(resultado, " AND ");
+                    strcat(resultado, " * ");
                 }
             }
 
