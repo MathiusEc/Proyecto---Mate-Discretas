@@ -8,22 +8,23 @@
 #define RESET   "\x1B[0m"
 
 // Función para evaluar cada término de la expresión SOP
-int evaluarTermino(int variables[], const char *termino, int numVars) {
-    int resultado = 1; // Valor inicial es verdadero
-    for (int i = 0; i < numVars; i++) {
-        // Construimos la variable A1, A2, etc.
-        char var[5];
-        sprintf(var, "A%d", i + 1);
+int evaluarTermino(int variables[], const char *termino) {
+    int resultado = 1; // Inicialmente asumimos que el término es verdadero
+    const char *ptr = termino;
 
-        // Buscamos si la variable está presente
-        char *pos = strstr(termino, var);
-        if (pos != NULL) {
-            // Si la variable está negada (NOT A1)
-            if (pos > termino && *(pos - 1) == 'T') {
-                resultado &= !variables[i];
-            } else {
-                resultado &= variables[i];
-            }
+    while (*ptr != '\0') {
+        if (strncmp(ptr, "NOT A", 5) == 0) {
+            int varIndex = ptr[5] - '1'; // Obtener el índice de la variable (A1 -> 0, A2 -> 1, etc.)
+            resultado &= !variables[varIndex];
+            ptr += 6; // Avanzar después de "NOT A1"
+        } else if (strncmp(ptr, "A", 1) == 0) {
+            int varIndex = ptr[1] - '1'; // Obtener el índice de la variable (A1 -> 0, A2 -> 1, etc.)
+            resultado &= variables[varIndex];
+            ptr += 2; // Avanzar después de "A1"
+        } else if (strncmp(ptr, " AND ", 5) == 0) {
+            ptr += 5; // Saltar el operador "AND"
+        } else {
+            ptr++; // Avanzar al siguiente carácter
         }
     }
     return resultado;
@@ -68,7 +69,7 @@ void generarTablaConResultadosParciales(int variables, int filas, const char *ex
 
         // Evaluamos cada término
         for (int j = 0; j < numTerminos; j++) {
-            resultadosParciales[j] = evaluarTermino(entradas, terminos[j], variables);
+            resultadosParciales[j] = evaluarTermino(entradas, terminos[j]);
             salidaFinal |= resultadosParciales[j];
             printf(GREEN "%d     " RESET, resultadosParciales[j]);
         }
