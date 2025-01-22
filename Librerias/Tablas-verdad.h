@@ -1,8 +1,3 @@
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
-#include ".\Colores_Terminal.h"
-
 // Función para evaluar cada término de la expresión SOP
 int evaluarTermino(int variables[], const char *termino) {
     int resultado = 1;
@@ -57,7 +52,11 @@ void imprimirTablaConResultadosParciales(int variables, int filas, int tabla[][v
         printf("%c   ", 'A' + i);
     }
     for (int i = 0; i < numTerminos; i++) {
-        printf("%s   ", terminos[i]);
+        if (i == 0) {
+            printf("%s   ", terminos[i]); // Para el primer término, solo se agrega el paréntesis inicial
+        } else {
+            printf("+ %s   ", terminos[i]); // Términos siguientes con el formato )+(
+        }
     }
     printf(RED "S\n" RESET);
     printf("----------------------------------------------------\n");
