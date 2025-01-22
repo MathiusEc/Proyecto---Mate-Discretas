@@ -142,43 +142,43 @@ int main(){
 
     // Llenar la tabla de verdad con los valores de entrada
     for (int i = 0; i < filas; i++) {
-        for (int j = variables - 1; j >= 0; j--) {
-            tabla[i][j] = (i >> j) & 1;
+        for (int j = 0; j < variables; j++) {
+            tabla[i][j] = (i >> (variables - j - 1)) & 1;
         }
     }
 
     // Solicitar los valores de salida (S)
     printf("Ingrese los valores de salida (0 o 1) para cada fila de la tabla de verdad:\n");
     for (int i = 0; i < filas; i++) { // Bucle externo que recorre cada fila de la tabla de verdad
-    do { // Bucle do-while para asegurar una entrada válida
-        printf("Fila %d: ", i); // Imprimir el número de la fila
-        scanf(" %d", &tabla[i][variables]); // Leer el valor de salida para la fila actual
-        // Verificar si el valor ingresado es válido (0 o 1)
-        if (tabla[i][variables] != 0 && tabla[i][variables] != 1) {
-            printf(RED "Error: Solo puede ingresar 0 o 1.\n" RESET); // Mostrar mensaje de error si el valor es inválido
-        }
-    } while (tabla[i][variables] != 0 && tabla[i][variables] != 1); // Repetir hasta que se ingrese un valor válido
-}
+        do { // Bucle do-while para asegurar una entrada válida
+            printf("Fila %d: ", i); // Imprimir el número de la fila
+            scanf(" %d", &tabla[i][variables]); // Leer el valor de salida para la fila actual
+            // Verificar si el valor ingresado es válido (0 o 1)
+            if (tabla[i][variables] != 0 && tabla[i][variables] != 1) {
+                printf(RED "Error: Solo puede ingresar 0 o 1.\n" RESET); // Mostrar mensaje de error si el valor es inválido
+            }
+        }while (tabla[i][variables] != 0 && tabla[i][variables] != 1); // Repetir hasta que se ingrese un valor válido
+    }
 
-    // Imprimir la tabla de verdad.
+    //Imprimir el encabezado de la tabla de verdad
     printf("\nTabla de Verdad:\n");
     for (int i = 0; i < variables; i++) {
-        // Imprimir los encabezados de las columnas (A, B, C, etc.).
         printf(" %c ", 'A' + i);
     }
     printf(" S\n");
+
+    // Imprimir el cuerpo de la tabla de verdad
     for (int i = 0; i < filas; i++) {
         for (int j = 0; j < variables; j++) {
-            // Imprimir los valores de las variables de entrada.
             printf(" %d ", tabla[i][j]);
         }
-        // Imprimir los valores de salida en color verde.
+        // Imprimir los valores de salida en color verde
         printf(GREEN " %d\n" RESET, tabla[i][variables]);
-}
+    }
 
     // Construcción de la expresión SOP
     construirSOP(variables, tabla, filas, expresionSOP);
-    generarTablaConResultadosParciales(variables, filas, expresionSOP);
+    imprimirTablaConResultadosParciales(variables, filas, tabla, expresionSOP);
     // Mostrar la expresión SOP
     printf(ORANGE "\nLa expresion SOP generada es: %s\n" RESET, expresionSOP);
 

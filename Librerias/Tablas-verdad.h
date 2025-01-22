@@ -1,88 +1,81 @@
-#include ".\Colores_Terminal.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include ".\Colores_Terminal.h"
 
 // Función para evaluar cada término de la expresión SOP
 int evaluarTermino(int variables[], const char *termino) {
-    int resultado = 1; // Inicialmente asumimos que el término es verdadero
+    int resultado = 1;
+    const char *ptr = termino;
 
-    const char *ptr = termino; // Apuntamos al inicio de la cadena término
-
-    while (*ptr != '\0') { // Recorremos la cadena hasta el final
-        if (ptr[1] == '\'') { // Verificamos si la variable está negada
-            int varIndex = ptr[0] - 'A'; // Obtener el índice de la variable (A -> 0, B -> 1, etc.)
-            resultado &= !variables[varIndex]; // Evaluamos la negación de la variable y combinamos con el resultado
-            ptr += 2; // Avanzamos el puntero 2 posiciones (después de "A'")
-        } else if (ptr[0] >= 'A' && ptr[0] <= 'Z') { // Verificamos si es una variable
-            int varIndex = ptr[0] - 'A'; // Obtener el índice de la variable (A -> 0, B -> 1, etc.)
-            resultado &= variables[varIndex]; // Evaluamos la variable y combinamos con el resultado
-            ptr += 1; // Avanzamos el puntero 1 posición (después de "A")
-        } else if (ptr[0] == '*') { // Verificamos el operador "*"
-            ptr += 1; // Saltamos el operador "*"
+    while (*ptr != '\0') {
+        if (*(ptr + 1) == '\'') { // Negación (ejemplo: A')
+            int varIndex = *ptr - 'A';
+            resultado &= !variables[varIndex];
+            ptr += 2;
+        } else if (*ptr >= 'A' && *ptr <= 'Z') { // Variable normal (ejemplo: A)
+            int varIndex = *ptr - 'A';
+            resultado &= variables[varIndex];
+            ptr++;
+        } else if (*ptr == '*') { // Operador AND ('*')
+            ptr++;
         } else {
-            ptr++; // Avanzamos al siguiente carácter
+            ptr++;
         }
     }
 
-    return resultado; // Devolvemos el resultado de la evaluación del término
+    return resultado;
 }
 
-// Función para evaluar la expresión SOP y generar la tabla
-void generarTablaConResultadosParciales(int variables, int filas, const char *expresionSOP) {
-    // Arreglo para las combinaciones de entrada
-    int entradas[variables];
-    
+// Función para generar la tabla de verdad
+void generarTablaDeVerdad(int variables, int filas, int tabla[][variables + 1]) {
+    for (int i = 0; i < filas; i++) {
+        for (int j = 0; j < variables; j++) {
+            tabla[i][j] = (i >> (variables - j - 1)) & 1;
+        }
+    }
+}
+
+// Función para imprimir la tabla de verdad con resultados parciales y colores
+void imprimirTablaConResultadosParciales(int variables, int filas, int tabla[][variables + 1], const char *expresionSOP) {
     // Copiamos la expresión SOP porque la modificaremos
     char expresion[1024];
     strcpy(expresion, expresionSOP);
 
     // Dividimos la expresión SOP en términos individuales
-    char *terminos[1024];     // Arreglo para almacenar los términos individuales
-    int numTerminos = 0;      // Contador de términos
-    char *token = strtok(expresion, "+"); // Dividimos la expresión SOP por el operador '+'
-    while (token != NULL) {   // Mientras haya más términos
-        terminos[numTerminos++] = token; // Añadimos el término al arreglo
-        token = strtok(NULL, "+");       // Obtenemos el siguiente término
+    char *terminos[1024];
+    int numTerminos = 0;
+    char *token = strtok(expresion, "+");
+    while (token != NULL) {
+        terminos[numTerminos++] = token;
+        token = strtok(NULL, "+");
     }
 
-    // Imprimimos el encabezado de la tabla
+    // Imprimir encabezado de la tabla
     printf("\nTabla de Verdad con Resultados Parciales:\n");
     for (int i = 0; i < variables; i++) {
-        printf("%c   ", 'A' + i); // Imprimimos las variables A, B, etc.
+        printf("%c   ", 'A' + i);
     }
     for (int i = 0; i < numTerminos; i++) {
-        if (i == numTerminos / 2) {
-            printf(RED "   S" RESET "   "); // Agregamos la columna del resultado final S en la mitad
-        }
-        printf("(%s)", terminos[i]); // Imprimimos los términos individuales con paréntesis
-        if (i < numTerminos - 1) {
-            printf(" + "); // Agregamos el '+' entre términos, pero no al final
-        }
+        printf("%s   ", terminos[i]);
     }
-    printf("\n------------------------------------------\n");
+    printf(RED "S\n" RESET);
+    printf("----------------------------------------------------\n");
 
-    // Generamos la tabla
-    for (int i = 0; i < filas; i++) { // Bucle externo que recorre cada fila de la tabla de verdad
-        // Generamos los valores binarios para las entradas
-        for (int j = variables - 1; j >= 0; j--) { // Bucle interno que recorre cada variable de entrada de derecha a izquierda
-            entradas[j] = (i >> j) & 1; // Calculamos el valor binario de la entrada para la variable j-ésima
-            printf("%d     ", entradas[j]); // Imprimimos el valor de la entrada
+    // Generar la tabla con resultados parciales
+    for (int i = 0; i < filas; i++) {
+        int entradas[variables];
+        for (int j = 0; j < variables; j++) {
+            entradas[j] = tabla[i][j];
+            printf("%d   ", entradas[j]);
         }
 
-        int resultadosParciales[numTerminos]; // Arreglo para almacenar los resultados parciales de cada término
-        int salidaFinal = 0; // Inicializamos el resultado final en 0
-
-        // Evaluamos cada término de la expresión SOP
-        for (int j = 0; j < numTerminos; j++) { // Bucle que recorre cada término de la expresión SOP
-            resultadosParciales[j] = evaluarTermino(entradas, terminos[j]); // Evaluamos el término j-ésimo
-            salidaFinal |= resultadosParciales[j]; // Combinamos el resultado parcial con el resultado final usando OR bit a bit
-            if (j == numTerminos / 2) {
-                printf(RED "%d     " RESET, salidaFinal); // Imprimimos el resultado final en rojo en la mitad
-            }
-            printf(GREEN "%d     " RESET, resultadosParciales[j]); // Imprimimos el resultado parcial en verde
+        int salidaFinal = 0;
+        for (int j = 0; j < numTerminos; j++) {
+            int resultadoParcial = evaluarTermino(entradas, terminos[j]);
+            salidaFinal |= resultadoParcial;
+            printf(GREEN "%d     " RESET, resultadoParcial);
         }
-
-        printf("\n"); // Pasamos a la siguiente fila
+        printf(RED "%d\n" RESET, salidaFinal);
     }
 }
